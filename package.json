@@ -2,9 +2,12 @@
   "name": "express-postgres-2024",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node .",
+    "start:dev": "nodemon ."
   },
   "keywords": [],
   "author": "",
@@ -15,5 +18,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }

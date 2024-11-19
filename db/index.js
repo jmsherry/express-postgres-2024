@@ -1,4 +1,5 @@
-import { Pool } from "pg";
+import pg from "pg";
+const { Pool } = pg
 
 const {
   DATABASE_URL = "postgresql://localhost/cars?user=postgres",

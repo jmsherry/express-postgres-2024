@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from "express"; // express server; this is a importruct
 import cors from "cors"
 // const { v4: uuidv4 } from 'uuid';
-import db from "./db";
+import db from "./db/index.js";
 
 const app = express(); // the constructor to create an app
 
@@ -156,7 +156,7 @@ app.all("*", (req, res) => {
   res.sendStatus(404);
 });
 
-module.exports = app;
+export default app;
 
 // CAR
 
