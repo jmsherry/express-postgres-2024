@@ -11,6 +11,7 @@ app.use(express.json()); //all json is properly passed
 app.use(cors());
 
 app.get("/api/v1/cars/:id?", (req, res) => {
+  console.log('IN GET');
   const { id } = req.params;
 
   // If you want to change the order: /api/v1/cars
@@ -43,6 +44,7 @@ app.get("/api/v1/cars/:id?", (req, res) => {
 });
 
 app.post("/api/v1/cars", (req, res) => {
+  console.log('IN POST');
   console.log("Adding", req.body); // { name: 'bugatti', bhp: 123 }
   const fields = Object.keys(req.body); // again, doing this for the whole of req.body is a bad idea. re.body.data would be a better place to put it.
   const columns = fields.join(", ");
@@ -75,6 +77,7 @@ app.post("/api/v1/cars", (req, res) => {
 });
 
 app.put("/api/v1/cars/:id", (req, res) => {
+  console.log('IN PUT');
   console.log("Updating", req.params.id);
   const { id: carId } = req.params;
 
@@ -114,6 +117,7 @@ app.put("/api/v1/cars/:id", (req, res) => {
 });
 
 app.delete("/api/v1/cars/:id", (req, res) => {
+  console.log('IN DELETE');
   console.log("Deleting", req.params.id);
   const { id: carId } = req.params;
 
@@ -136,6 +140,8 @@ app.delete("/api/v1/cars/:id", (req, res) => {
 });
 
 app.get("/api/v1/cars/join/owner", (req, res) => {
+  console.log('IN GET (join)');
+  
   const QUERY = "SELECT * FROM cars AS T1";
   let JOIN = " INNER JOIN owners AS T2 ON T1.owner = T2.id"; // try changing 'LEFT' for 'RIGHT' or 'INNER' or 'FULL OUTER' "
 
@@ -153,6 +159,7 @@ app.get("/api/v1/cars/join/owner", (req, res) => {
 });
 
 app.all("*", (req, res) => {
+  console.log('IN 404');
   res.sendStatus(404);
 });
 
