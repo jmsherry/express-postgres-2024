@@ -1,7 +1,7 @@
 import app from './server.js';
 
 const {
-  PORT = 3000,
+  PORT = 3333,
 } = process.env;
 
 const server = app.listen(PORT, () => {
