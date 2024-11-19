@@ -17,7 +17,7 @@ app.get("/api/v1/cars/:id?", (req, res) => {
   const { searchField = "id", searchDirection = "ASC" } = req.query;
 
   console.log("id", id);
-  const QUERY = "SELECT * FROM cars";
+  const QUERY = "SELECT * FROM public.cars";
   let SORT = "";
   let CASE = "";
   if (id) {
@@ -54,7 +54,7 @@ app.post("/api/v1/cars", (req, res) => {
     }
   }
 
-  const fullQuery = `INSERT INTO cars (${columns}) VALUES (${values
+  const fullQuery = `INSERT INTO public.cars (${columns}) VALUES (${values
     .map((v, i) => `$${i + 1}`)
     .join(", ")}) RETURNING *`;
   console.log("fullQuery", fullQuery);
@@ -95,7 +95,7 @@ app.put("/api/v1/cars/:id", (req, res) => {
     }
   }
   console.log(setStr);
-  const query = `UPDATE cars SET ${setStr.slice(
+  const query = `UPDATE public.cars SET ${setStr.slice(
     0,
     setStr.length - 2 // get rid of last ', '
   )} WHERE id = ${carId} RETURNING *`;
@@ -119,7 +119,7 @@ app.delete("/api/v1/cars/:id", (req, res) => {
 
   console.log("carToBeDeleted", carId);
   db.query(
-    "DELETE FROM cars WHERE id = $1 RETURNING *",
+    "DELETE FROM public.cars WHERE id = $1 RETURNING *",
     [carId],
     (error, results) => {
       if (error) {
@@ -136,7 +136,7 @@ app.delete("/api/v1/cars/:id", (req, res) => {
 });
 
 app.get("/api/v1/cars/join/owner", (req, res) => {
-  const QUERY = "SELECT * FROM cars AS T1";
+  const QUERY = "SELECT * FROM public.cars AS T1";
   let JOIN = " INNER JOIN owners AS T2 ON T1.owner = T2.id"; // try changing 'LEFT' for 'RIGHT' or 'INNER' or 'FULL OUTER' "
 
   const fullQuery = `${QUERY}${JOIN}`;
