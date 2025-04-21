@@ -6,7 +6,7 @@ import db from "./db/index.js";
 
 const app = express(); // the constructor to create an app
 
-app.use(express.static("public")); //is it inside thisfolder and use; the order of app uses matter
+app.use(express.static("public")); // is it inside this folder and use; the order of app uses matter
 app.use(express.json()); //all json is properly passed
 app.use(cors());
 
@@ -15,7 +15,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/api/v1/cars/:id?", (req, res) => {
+// If you use express v5 it's:
+app.get("/api/v1/cars{/:id}", (req, res) => {
+// otherwise:
+// app.get("/api/v1/cars/:id?", (req, res) => {
   console.log("IN GET");
   const { id } = req.params;
 
@@ -164,8 +167,8 @@ app.get("/api/v1/cars/join/owner", (req, res) => {
   });
 });
 
-app.all("*", (req, res) => {
-  console.log("IN 404");
+app.all("/*route", (req, res) => {
+  console.log("IN 404", req.params.route);
   res.sendStatus(404);
 });
 

@@ -34,22 +34,6 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
---
--- Name: cars; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.cars (
-    id bigint GENERATED ALWAYS AS IDENTITY,
-    make character varying(50) NOT NULL,
-    bhp integer NOT NULL,
-    avatar_url character varying(100) DEFAULT 'https://static.thenounproject.com/png/449586-200.png'::character varying NOT NULL,
-    owner integer
-);
-
-
-ALTER TABLE public.cars OWNER TO postgres;
-
-
 
 --
 -- Name: owners; Type: TABLE; Schema: public; Owner: postgres
@@ -64,16 +48,22 @@ CREATE TABLE public.owners (
 ALTER TABLE public.owners OWNER TO postgres;
 
 
+
 --
--- Data for Name: cars; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Name: pets; Type: TABLE; Schema: public; Owner: postgres
 --
 
-COPY public.cars (id, make, bhp, avatar_url, owner) FROM stdin;
-11	bugatti	666	https://static.thenounproject.com/png/449586-200.png	1
-12	Ferrari	555	https://static.thenounproject.com/png/449586-200.png	\N
-13	bugatti 5000	999	https://static.thenounproject.com/png/449586-200.png	1
-14	bugatti 5000	999	https://static.thenounproject.com/png/449586-200.png	1
-\.
+CREATE TABLE public.pets (
+    id bigint GENERATED ALWAYS AS IDENTITY,
+    name character varying(50) NOT NULL,
+    type character varying(50) NOT NULL,
+    weight numeric,
+    owner integer
+);
+
+
+ALTER TABLE public.pets OWNER TO postgres;
+
 
 
 --
@@ -86,14 +76,13 @@ COPY public.owners (id, name) FROM stdin;
 \.
 
 
-
-
 --
--- Name: cars cars_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Data for Name: pets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.cars
-    ADD CONSTRAINT cars_pkey PRIMARY KEY (id);
+COPY public.pets (id, name, type, weight, owner) FROM stdin;
+\.
+
 
 
 --
@@ -104,13 +93,20 @@ ALTER TABLE ONLY public.owners
     ADD CONSTRAINT owners_pkey PRIMARY KEY (id);
 
 
+--
+-- Name: pets pets_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pets
+    ADD CONSTRAINT pets_pkey PRIMARY KEY (id);
+
 
 --
--- Name: cars cars_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: pets fk_owner; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.cars
-    ADD CONSTRAINT cars_owner_fkey FOREIGN KEY (owner) REFERENCES public.owners(id);
+ALTER TABLE ONLY public.pets
+    ADD CONSTRAINT fk_owner FOREIGN KEY (owner) REFERENCES public.pets(id);
 
 
 --
